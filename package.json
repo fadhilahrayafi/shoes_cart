@@ -1,0 +1,29 @@
+{
+  "name": "shoes_cart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fadhilahrayafi/shoes_cart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fadhilahrayafi/shoes_cart/issues"
+  },
+  "homepage": "https://github.com/fadhilahrayafi/shoes_cart#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.0",
+    "pg": "^7.17.1",
+    "sequelize": "^5.21.3"
+  }
+}
