@@ -11,7 +11,7 @@ router.get('/edit/:shoeId', shoesController.formEdit)
 router.post('/edit/:shoeId', shoesController.edit)
 router.get('/transaction', shoesController.listTransaction)
 router.get('/transaction/detail/:userId/:transactionId', shoesController.detailTransaction)
-router.get('/transaction/updateStatus/:userId/:transactionId')
+router.get('/transaction/updateStatus/:userId/:transactionId', shoesController.updateStatus)
 
 
 module.exports = router

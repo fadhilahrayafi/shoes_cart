@@ -7,3 +7,5 @@ function formatMoney(money) {
     result += (money).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     return result
 }
+
+module.exports = { getTotal, formatMoney }

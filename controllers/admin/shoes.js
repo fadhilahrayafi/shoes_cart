@@ -2,6 +2,7 @@ const ShoeModel = require('../../models').Shoe
 const Transaction = require('../../models').Transaction
 const User = require('../../models').User
 const Cart = require('../../models').Cart
+const Op = require('sequelize').Op
 
 
 class Shoes {
@@ -90,7 +91,7 @@ class Shoes {
         {
           include: [
             {
-              model: Transaction,
+              model: Transaction, where: { status: "onProgress" },
               include: [
                 {
                   model: Cart,
@@ -135,12 +136,24 @@ class Shoes {
           ]
         })
       .then(users => {
-        res.send(users[0].Transactions[0].Carts[0])
+        // res.send(users[0].Transactions[0].Carts[0])
         res.render('admin/index', { view: 'shoes/detailShoe', detail: users[0].Transactions[0].Carts[0] })
       })
       .catch(err => {
         res.send(err)
       })
+  }
+
+  static updateStatus(req, res) {
+    Transaction.update(objTrasaction, { where: { id: Number(req.params.transactionId) } })
+      .then(() => {
+        req.flash('success', "successfully updating transaction status")
+        res.redirect('/admin/transaction')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+
   }
 
 }

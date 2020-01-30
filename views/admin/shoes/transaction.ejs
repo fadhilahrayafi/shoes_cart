@@ -11,17 +11,12 @@
                         Detail</a>
                 </li>
                 <li class="list-group-item">
-                    <% if(users[i].Transactions[j].status == "on cart") { %>
-                    <a href="/admin/trasaction/updateStatus/<%=users[i].id%>/<%= users[i].Transactions[j].id %>"><button
-                            type="button" class="btn btn-danger">On Cart</button></a>
-
-                    <% } else if (users[i].Transactions[j].status == "on progress") { %>
-                    <a href="/admin/trasaction/updateStatus/<%=users[i].id%>/<%= users[i].Transactions[j].id %>"><button
+                    <% if (users[i].Transactions[j].status == "onProgress") { %>
+                    <a href="/admin/transaction/updateStatus/<%=users[i].id%>/<%= users[i].Transactions[j].id %>"><button
                             type="button" class="btn btn-warning">On Progress</button></a>
 
                     <% } else { %>
-                    <a href="/admin/trasaction/updateStatus/<%=users[i].id%>/<%= users[i].Transactions[j].id %>"><button
-                            type="button" class="btn btn-success">Complete</button> </a>
+                    <a href="/admin/transaction"><button type="button" class="btn btn-success">Complete!</button> </a>
 
                     <% } %>
                 </li>
