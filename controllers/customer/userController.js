@@ -25,7 +25,7 @@ class UserController {
         if (result) {
           return result
         } else {
-          throw 'email tidak ada'
+          throw 'email invalid!'
         }
       })
       .then(result => {
@@ -40,7 +40,7 @@ class UserController {
           req.flash('success', "success login")
           res.redirect('/')
         } else {
-          throw 'password salah'
+          throw 'wrong password'
         }
       })
       .catch(err => {
