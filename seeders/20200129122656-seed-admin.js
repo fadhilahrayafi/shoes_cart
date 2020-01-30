@@ -2,13 +2,13 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-
+    const passwordHash = require('password-hash')
     return queryInterface.bulkInsert("Admins", [
       {
         id: 1,
         name: "fadhilah",
-        email: "fadhilahrayafi@gmail.com",
-        password: "123456",
+        email: "admin@shoecart.com",
+        password: passwordHash.generate('123456'),
         createdAt: new Date,
         updatedAt: new Date
       }
