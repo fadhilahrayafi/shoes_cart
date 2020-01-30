@@ -1,4 +1,5 @@
 const ShoeModel = require('/home/fadhilah/Documents/phase-1-ngulang/week4/shoes_cart/models').Shoe
+
 class Shoes {
   static list(req, res) {
     //contoh err message
