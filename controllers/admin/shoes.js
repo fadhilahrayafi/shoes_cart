@@ -91,7 +91,13 @@ class Shoes {
         {
           include: [
             {
-              model: Transaction, where: { status: "onProgress" },
+              model: Transaction, where: { 
+                status: {
+                [Op.or]:[
+                    "onProgress", "complete"
+                  ]
+                }
+                },
               include: [
                 {
                   model: Cart,
@@ -145,6 +151,9 @@ class Shoes {
   }
 
   static updateStatus(req, res) {
+    let objTrasaction = {
+      status:"complete"
+    }
     Transaction.update(objTrasaction, { where: { id: Number(req.params.transactionId) } })
       .then(() => {
         req.flash('success', "successfully updating transaction status")
