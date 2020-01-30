@@ -8,6 +8,7 @@
 <form method="post" action="/cart" class="border bg-light w-75 mx-auto">
   <input type="hidden" class="form-control" name="TransactionsId" value=<%= transaction.id %>>
   <div class="overflow-auto" style="height:400px;">
+  <% if(transaction.Shoes.length > 0){ %>
   <% for (let i = 0; i < transaction.Shoes.length; i++) { %>
     <div class="row text-center m-4">
       <div class="col d-flex justify-content-center h-50">
@@ -29,6 +30,11 @@
         </div>
       </div>
     </div>
+    <% } %>
+    <% }else{ %>
+      <div class="text-center h-auto ">
+        <h3><a href="/">Let's Start Shopping</a></h3>
+      </div>
     <% } %>
     </div>  
     <button type="submit" class="btn btn-primary m-4">Buy</button>

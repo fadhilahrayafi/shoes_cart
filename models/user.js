@@ -45,14 +45,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         afterFind(user, option) {
           if(!Array.isArray(user)){
-            if(user.Transactions.length === 1){
-              let total = 0
-              for(let i = 0; i < user.Transactions[0].Carts.length; i++){
-                let value = user.Transactions[0].Carts[i].jumlah * user.Transactions[0].Carts[i].Shoe.price
-                user.Transactions[0].Carts[i].setDataValue("total", value)
-                total += value
+            if(user.Transactions){
+              if(user.Transactions.length === 1){
+                let total = 0
+                for(let i = 0; i < user.Transactions[0].Carts.length; i++){
+                  let value = user.Transactions[0].Carts[i].jumlah * user.Transactions[0].Carts[i].Shoe.price
+                  user.Transactions[0].Carts[i].setDataValue("total", value)
+                  total += value
+                }
+                user.Transactions[0].setDataValue("total",total)
               }
-              user.Transactions[0].setDataValue("total",total)
             }
           }
           

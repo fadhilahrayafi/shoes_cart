@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer");
 function mailer(email, message) {
 
 
-
+    console.log("<<<masuk")
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -18,7 +18,7 @@ function mailer(email, message) {
     let mailOptions = {
         from: 'shoecartz@gmail.com', // sender address
         to: email, // list of receivers
-        subject: "Your purchase from Skin Type receipt", // Subject line
+        subject: "Shoe Cart", // Subject line
         text: "Hello world?", // plain text body
         html: message
     }

@@ -2,14 +2,15 @@ const ShoeModel = require('../../models').Shoe
 const Transaction = require('../../models').Transaction
 const User = require('../../models').User
 const Cart = require('../../models').Cart
+const Admin = require('../../models').Admin
 const Op = require('sequelize').Op
 const sequelize = require('sequelize')
+const mailer = require('../../helpers/mailer')
+const passwordHash = require('password-hash')
+
 
 class Shoes {
   static list(req, res) {
-    //contoh err message
-    //look index view message
-    //mau render mau redirect gamasalah
     ShoeModel.findAll()
       .then(shoes => {
 
@@ -35,9 +36,13 @@ class Shoes {
   }
 
   static add(req, res) {
+    if(!req.file){
+      req.flash("error", "no image")
+      res.redirect('/admin/add')
+    }
     const objShoe = {
       name: req.body.name,
-      image: req.body.image,
+      img: req.file.path,
       stock: Number(req.body.stock),
       price: Number(req.body.price) == 0 ? "" : req.body.price
     }
@@ -50,7 +55,6 @@ class Shoes {
         for (let i = 0; i < err.errors.length; i++) {
           req.flash(err.errors[i].path, err.errors[i].message)
         }
-        req.flash("modal", true)
         res.redirect('/admin/add')
       })
   }
@@ -156,10 +160,19 @@ class Shoes {
 
   static updateStatus(req, res) {
     let objTrasaction = {
-      status:"complete"
+      status: "complete"
     }
     Transaction.update(objTrasaction, { where: { id: Number(req.params.transactionId) } })
       .then(() => {
+
+        return User.findByPk(req.params.userId)
+      })
+      .then(user => {
+        let message = `Hello! ${user.name} <br>
+        we are from Shoe Cart want to inform you about your latest transaction!<br> 
+        your transaction is ready to be delivered and will come as soon as possible!<br><br>
+        Thank you for trusting our company...`
+        mailer(user.email, message)
         req.flash('success', "successfully updating transaction status")
         res.redirect('/admin/transaction')
       })
@@ -167,6 +180,47 @@ class Shoes {
         res.send(err)
       })
 
+  }
+
+  static login(req, res, next) {
+    if (req.body.email !== "admin@shoecart.com") {
+      next()
+    }else{
+      const opt = {
+        where: {
+          email: req.body.email
+        }
+      }
+      Admin
+        .findOne(opt)
+        .then(result => {
+          if (result) {
+            return result
+          } else {
+            throw 'email tidak ada'
+          }
+        })
+        .then(result => {
+          if (passwordHash.verify(req.body.password, result.password)) {
+            req.session.user = {
+              name: result.name,
+              id: result.id
+            }
+            req.app.locals.user = {
+              name: result.name
+            }
+            req.flash('success', "success login")
+            res.redirect('/admin')
+          } else {
+            throw 'password salah'
+          }
+        })
+        .catch(err => {
+          req.flash("error","username/password salah")
+          req.flash("modal", true)
+          res.redirect('/')
+        })
+    }
   }
 
 }
