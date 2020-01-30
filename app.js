@@ -4,9 +4,12 @@ const port = 3000
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+//middleware
+const middleware = require('./middlewares/middleware')
 //routes
 const routes = require('./routes')
 //view
+app.use(express.static(__dirname))
 app.set('view engine','ejs')
 app.use(cookieParser('keyboard cat'))
 app
@@ -22,9 +25,10 @@ app
   )
 app.use(flash())
 app.use(express.urlencoded({extended:true}))
+app.locals.user = null
 
-app.use('/',routes.app)
+
 app.use('/admin',routes.admin)
-
+app.use('/',middleware.checkSession,routes.app)
 
 app.listen(port, () => console.log(`app listening on port ${port}!`))

@@ -9,5 +9,9 @@ router.get('/add', shoesController.formAdd)
 router.post('/add', shoesController.add)
 router.get('/edit/:shoeId', shoesController.formEdit)
 router.post('/edit/:shoeId', shoesController.edit)
+router.get('/transaction', shoesController.listTransaction)
+router.get('/transaction/detail/:userId/:transactionId', shoesController.detailTransaction)
+router.get('/transaction/updateStatus/:userId/:transactionId')
+
 
 module.exports = router

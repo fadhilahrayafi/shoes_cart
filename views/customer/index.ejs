@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Shoes Cart</title>
+  <link rel="stylesheet" href="/views/css/bootstrap.min.css">
+  <script src="/views/js/jquery-slim.min.js"></script>
+  <script src="/views/js/popper.min.js"></script>
+  <script src="/views/js/bootstrap.min.js" ></script>
+</head>
+<body>
+  
+  <%-include('navBar')%>
+  <div class="container">
+    <div class="title">
+      <h2><%= title %></h2>
+    </div>
+    <div class="message">
+      <% if(messages.success){ %>
+        <div class="alert alert-success" role="alert">
+          <%=messages.success%>
+        </div>
+      <% } %>
+    </div>
+    <div class="content">
+      <%-include(view)%>
+    </div>
+  </div>
+  <%-include('modal')%>
+</body>
+</html>
+<script>
+  if('<%=messages.modal%>'){
+    $("#login").click();
+  }
+</script>
