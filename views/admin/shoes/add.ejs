@@ -2,18 +2,22 @@
     <div class="form-group">
         <label for="formGroupExampleInput">Name</label>
         <input type="text" class="form-control" name="name">
+        <label class='text-danger'><%= messages.name%></label>
     </div>
     <div class="form-group">
         <label for="formGroupExampleInput">Image</label>
         <input type="text" class="form-control" name="image">
+        <label class='text-danger'><%= messages.image%></label>
     </div>
     <div class="form-group">
         <label for="formGroupExampleInput">Stocks</label>
         <input type="number" class="form-control" name="stock">
+        <label class='text-danger'><%= messages.stock%></label>
     </div>
     <div class="form-group">
         <label for="formGroupExampleInput">Price</label>
         <input type="number" class="form-control" name="price">
+        <label class='text-danger'><%= messages.price%></label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
