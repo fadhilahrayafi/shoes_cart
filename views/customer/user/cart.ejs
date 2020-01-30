@@ -1,0 +1,13 @@
+<form method="post" action="/cart">
+  <input type="hidden" class="form-control" name="TransactionsId" value=<%= transaction.id %>>
+  <% for (let i = 0; i < transaction.Shoes.length; i++){ %>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label"><%= transaction.Shoes[i].name %></label>
+    <div class="col-sm-10">
+      <input type="hidden" class="form-control" name="ShoesId" value=<%= transaction.Shoes[i].Cart.ShoesId %>>
+      <input type="number" class="form-control" placeholder="0" name="jumlah" value=<%= transaction.Shoes[i].Cart.jumlah %> >
+    </div>
+  </div>
+  <% } %>
+  <button type="submit" class="btn btn-primary">Buy</button>
+</form>

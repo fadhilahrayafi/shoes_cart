@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }, { sequelize })
   Shoe.associate = function (models) {
     // associations can be defined here
+    Shoe.belongsToMany(models.Transaction,{through:models.Cart,foreignKey:"ShoesId"})
   };
   return Shoe;
 };

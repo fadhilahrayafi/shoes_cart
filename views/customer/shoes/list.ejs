@@ -1,0 +1,20 @@
+<div class="row text-center">
+  <% for (let i = 0; i < shoes.length; i++){ %>
+  <div class="col-4">
+    <div class="card" style="width: 18rem;">
+      <img src="/image/avatar.gif" alt="/image/avatar.gif" width='250px'>
+      <div class="card-body">
+        <h5 class="card-title"><%= shoes[i].name %></h5>
+        <p class="card-text">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Price : <%= shoes[i].price %>
+            </li>
+          </ul>
+        </p>
+        <a href="/cart/<%= shoes[i].id %>" class="btn btn-primary">Add Cart</a>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
