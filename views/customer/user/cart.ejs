@@ -1,13 +1,36 @@
-<form method="post" action="/cart">
-  <input type="hidden" class="form-control" name="TransactionsId" value=<%= transaction.id %>>
-  <% for (let i = 0; i < transaction.Shoes.length; i++){ %>
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label"><%= transaction.Shoes[i].name %></label>
-    <div class="col-sm-10">
-      <input type="hidden" class="form-control" name="ShoesId" value=<%= transaction.Shoes[i].Cart.ShoesId %>>
-      <input type="number" class="form-control" placeholder="0" name="jumlah" value=<%= transaction.Shoes[i].Cart.jumlah %> >
+<div class="message">
+  <% if(messages.error){ %>
+    <div class="alert alert-danger" role="alert">
+      <%=messages.error%>
     </div>
-  </div>
   <% } %>
-  <button type="submit" class="btn btn-primary">Buy</button>
+</div>
+<form method="post" action="/cart" class="border bg-light w-75 mx-auto">
+  <input type="hidden" class="form-control" name="TransactionsId" value=<%= transaction.id %>>
+  <div class="overflow-auto" style="height:400px;">
+  <% for (let i = 0; i < transaction.Shoes.length; i++) { %>
+    <div class="row text-center m-4">
+      <div class="col d-flex justify-content-center h-50">
+        <div class="card" >
+          <img src="/image/avatar.gif" alt="/image/avatar.gif" style="max-width:100px">
+          <div class="card-body">
+            <h5 class="card-title"><%= transaction.Shoes[i].name %></h5>
+            <p class="card-text">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  Price : <%= transaction.Shoes[i].price %>
+                </li>
+              </ul>
+            </p>
+            <input type="hidden" name="ShoesId" class="form-control" value="<%= transaction.Shoes[i].Cart.ShoesId %>">
+            <input type="number" name="jumlah" class="form-control" value="<%= transaction.Shoes[i].Cart.jumlah %>">
+            <small class="text-danger"><%=messages[transaction.Shoes[i].name]%></small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %>
+    </div>  
+    <button type="submit" class="btn btn-primary m-4">Buy</button>
+  
 </form>

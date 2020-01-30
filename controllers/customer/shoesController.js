@@ -4,7 +4,7 @@ class ShoesController {
     ShoeModel.findAll()
       .then(shoes => {
         // req.flash('success',"test")
-        res.render('customer/index', { view: 'shoes/list', title: "shoes", shoes })
+        res.render('customer/index', { view: 'shoes/list', shoes })
       })
       .catch(err => {
         res.send(err)

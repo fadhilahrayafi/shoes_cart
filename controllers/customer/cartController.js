@@ -69,10 +69,28 @@ class CartsController {
         {model: Shoe},
       ]
     }
+
     Transaction
       .findOne(opt)
       .then(transaction => {
-        res.render('customer/index',{view:'user/cart',title:'cart',transaction})
+        // res.send(transaction)
+        if(transaction){
+          res.render('customer/index',{view:'user/cart',transaction})
+        }else{
+          let value = {
+            status:'onCart',
+            date: new Date,
+            user_id: req.session.user.id
+          }
+          return Transaction.create(value)
+        }
+      })
+      .then(transaction => {
+        return Transaction
+                .findOne(opt)
+      })
+      .then(transaction => {
+        res.render('customer/index',{view:'user/cart',transaction})
       })
       .catch(err => {
         res.send(err)
@@ -80,7 +98,96 @@ class CartsController {
   }
 
   static buyCart(req,res){
-    res.send(req.body)
+    //res.send(req.body)
+    let values = []
+    if(!req.body.ShoesId){
+      req.flash("error","no item")
+      res.redirect('back')
+    }
+    for (let i = 0; i < req.body.ShoesId.length; i++){
+      let value = {
+        jumlah: req.body.jumlah[i]
+      }
+      values.push(value)
+    }
+    let opt = {
+      where:{
+        TransactionsId : req.body.TransactionsId
+      },
+      order: [['id', 'ASC']]
+    }
+    Cart
+      .findAll(opt)
+      .then(carts => {
+        
+        let promises = []
+        for (let i =0 ; i < carts.length; i++){
+          promises.push(carts[i].update(values[i],{returning:true}))
+        }
+        return Promise.all(promises)
+      })
+      .then(carts => {
+        let promises = []
+        for (let i =0 ; i < carts.length; i++){
+          let opt = {
+            include: [
+              {model: Shoe},
+            ],
+            where:{
+              id:carts[i].id
+            },
+          }
+          promises
+            .push(
+              Cart
+                .findOne(opt)
+            )
+        }
+        return Promise.all(promises)
+      })
+      .then(carts => {
+        let error = []
+        for (let i = 0; i < carts.length; i++){
+          if(carts[i].Shoe.stock < carts[i].jumlah){
+            error.push('')
+            req.flash(carts[i].Shoe.name,'sisa ' + carts[i].Shoe.stock)
+          }
+        }
+        if(error.length > 0){
+          res.redirect('back')
+        }else{
+          return carts
+        }
+      })
+      .then(carts => {
+        let promises = []
+        for (let i = 0; i < carts.length; i++){
+          let value = {
+            stock: carts[i].Shoe.stock - carts[i].jumlah
+          }
+          promises.push(carts[i].Shoe.update(value))
+        }
+        return Promise.all(promises)
+        
+      })
+      .then(shoes => {
+        let value = {
+          status : "onProgress"
+        }
+        let opt = {
+          where : {
+            id : req.body.TransactionsId
+          }
+        }
+        return Transaction.update(value,opt)
+      })
+      .then(transaction => {
+        req.flash('success',"Pembelian berhasil sekalian melakukan pembayaran")
+        res.redirect('/')
+      })
+      .catch(err => {
+        res.send(err)
+      })
   }
 }
 

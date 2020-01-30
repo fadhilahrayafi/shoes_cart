@@ -1,27 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger text-light px-5">
   <a class="navbar-brand" href="#">Shoes Cart</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mx-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
     <% if(!user){ %>
-    <button class="btn btn-outline-primary my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModal" id="login">
+    <button class="btn btn-outline-light btn-danger my-2 my-sm-0 text-light" type="button" data-toggle="modal" data-target="#exampleModal" id="login">
       Login / Register
     </button>
     <% }else{ %>
-      <a href='/cart' class="btn btn-outline-primary my-2 my-sm-0 mr-4">
+      <a href='/cart' class="btn btn-outline-light btn-danger my-2 my-sm-0 mr-4 text-light">
         Cart
       </a>
-      <h3>
-        Welcome <a href="/profile"><%= user.name%></a>,
-        <a href="/logout">Logout</a>
-      </h3>
+      <small class="text-light">
+        Welcome <a href="/profile" class="text-light"><%= user.name%></a>,
+        <a href="/logout" class="text-light">Logout</a>
+      </small>
     <% } %>
   </div>
 </nav>

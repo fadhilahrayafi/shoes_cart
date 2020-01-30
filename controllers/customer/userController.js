@@ -5,7 +5,7 @@ class UserController{
     User
       .findByPk(req.session.user.id)
       .then(user => {
-        res.render('customer/index',{view:'user/profile',title:'Profile',user})
+        res.render('customer/index',{view:'user/profile',user})
       })
       .catch(err => {
         res.redirect('/profile')
