@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +9,28 @@
   <link rel="stylesheet" href="/views/css/bootstrap.min.css">
   <script src="/views/js/jquery-slim.min.js"></script>
   <script src="/views/js/popper.min.js"></script>
-  <script src="/views/js/bootstrap.min.js" ></script>
+  <script src="/views/js/bootstrap.min.js"></script>
 </head>
-<body  style="background-color:#b8b4b4;">
+
+<body style="background-color:#b8b4b4;">
   <%-include('carousel')%>
   <%-include('navBar')%>
-  <div class="container w-75  p-4" >
-    <div class="message">
-      <% if(messages.success){ %>
-        <div class="alert alert-success" role="alert">
-          <%=messages.success%>
-        </div>
-      <% } %>
+  <div class="message">
+    <% if(messages.success){ %>
+    <div class="alert alert-success" role="alert">
+      <%=messages.success%>
     </div>
-    <div class="content">
-      <%-include(view)%>
-    </div>
+    <% } %>
+  </div>
+  <div class="content">
+    <%-include(view)%>
   </div>
   <%-include('modal')%>
 </body>
+
 </html>
 <script>
-  if('<%=messages.modal%>'){
+  if ('<%=messages.modal%>') {
     $("#login").click();
   }
 </script>
