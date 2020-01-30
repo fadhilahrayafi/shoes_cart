@@ -1,21 +1,57 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Detail Transaction</h5>
+        <p class="card-text">
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td><%= users.name %></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td><%= users.address %></td>
+                        </tr>
+                        <tr>
+                            <td>Total</td>
+                            <td><%= formatMoney(users.Transactions[0].getDataValue('total')) %></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            </ul>
+        </p>
+    </div>
+</div>
+</div>
 <div class="row text-center">
-    <div class="col-4">
-        <div class="card" style="width: 18rem;">
-            <img src="/image/avatar.gif" alt="/image/avatar.gif" width='250px'>
-            <div class="card-body">
-                <h5 class="card-title"><%= detail.Shoe.name %></h5>
-                <p class="card-text">
-                    <ul class="list-group list-group-flush">
+    <% for (let i = 0; i < users.Transactions[0].Carts.length; i++){ %>
+        <div class="col-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"><%= users.Transactions[0].Carts[i].Shoe.name %></h5>
+                    <p class="card-text">
+                        <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            Total Price : <br>
-                            <%= formatMoney(getTotal(detail.Shoe.price,detail.jumlah )) %>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Jumlah</td>
+                                        <td><%= users.Transactions[0].Carts[i].jumlah %></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td><%= formatMoney(users.Transactions[0].Carts[i].getDataValue('total')) %></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </li>
-                        <li class="list-group-item">
-                            Sisa Stock : <%= detail.Shoe.stock %>
-                        </li>
-                    </ul>
-                </p>
+                        </ul>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+        <% } %>
 </div>

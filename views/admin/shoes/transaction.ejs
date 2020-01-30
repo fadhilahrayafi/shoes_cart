@@ -1,30 +1,25 @@
 <div class="row text-center">
-    <% for (let i = 0; i < users.length; i++){ %>
+    <% for (let i = 0; i < transaction.length; i++){ %>
     <div class="col-4">
-        <h5 class="card-title"><%= users[i].name %></h5>
-        <p class="card-text">
-            <h5>Trasactions</h5>
-            <% for (let j = 0; j < users[i].Transactions.length; j++){ %>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <a href="/admin/transaction/detail/<%=users[i].id%>/<%= users[i].Transactions[j].id %>">Show
-                        Detail</a>
-                </li>
-                <li class="list-group-item">
-                    <% if (users[i].Transactions[j].status == "onProgress") { %>
-                    <a href="/admin/transaction/updateStatus/<%=users[i].id%>/<%= users[i].Transactions[j].id %>"><button
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%= transaction[i].User.name %></h5>
+                <p class="card-text">
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <a href="/admin/transaction/detail/<%=transaction[i].User.id%>/<%= transaction[i].id %>">Show
+                            Detail</a>
+                    </li>
+                    </ul>
+                </p>
+                <% if (transaction[i].status == "onProgress") { %>
+                    <a href="/admin/transaction/updateStatus/<%=transaction[i].User.id%>/<%= transaction[i].id %>"><button
                             type="button" class="btn btn-warning">On Progress</button></a>
-
                     <% } else { %>
                     <a href="/admin/transaction"><button type="button" class="btn btn-success">Complete!</button> </a>
-
                     <% } %>
-                </li>
-            </ul>
-            <% } %>
-        </p>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-<% } %>
+    <% } %>
 </div>

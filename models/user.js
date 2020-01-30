@@ -43,19 +43,20 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate(user, option) {
           user.password = passwordHash.generate(user.password)
         },
-        // afterFind(instsance, option) {
-        //   if (Array.isArray(instsance)) {
-        //     for (let i = 0; i < instsance.length; i++) {
-        //       if (instsance[i].Transactions[0].Carts) {
-        //         console.log(">>>>>>>>>MASUK")
-        //         for (let j = 0; j < instsance[i].Transactions[0].Carts.length; j++) {
-        //           instsance[i].Transactions[0].Carts[j].total = instsance[i].Transactions[0].Carts[j].jumlah * instsance[i].Transactions[0].Carts[j].Shoe.price
-        //           console.log(instsance[i].Transactions[0].Carts[j].total)
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
+        afterFind(user, option) {
+          if(!Array.isArray(user)){
+            if(user.Transactions.length === 1){
+              let total = 0
+              for(let i = 0; i < user.Transactions[0].Carts.length; i++){
+                let value = user.Transactions[0].Carts[i].jumlah * user.Transactions[0].Carts[i].Shoe.price
+                user.Transactions[0].Carts[i].setDataValue("total", value)
+                total += value
+              }
+              user.Transactions[0].setDataValue("total",total)
+            }
+          }
+          
+        }
       }
     });
   User.associate = function (models) {

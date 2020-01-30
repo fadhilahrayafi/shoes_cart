@@ -3,7 +3,7 @@ const Transaction = require('../../models').Transaction
 const User = require('../../models').User
 const Cart = require('../../models').Cart
 const Op = require('sequelize').Op
-
+const sequelize = require('sequelize')
 
 class Shoes {
   static list(req, res) {
@@ -86,34 +86,38 @@ class Shoes {
   }
 
   static listTransaction(req, res) {
-    User
+    Transaction
       .findAll(
         {
           include: [
-            {
-              model: Transaction, where: { 
-                status: {
-                [Op.or]:[
-                    "onProgress", "complete"
-                  ]
-                }
-                },
-              include: [
-                {
-                  model: Cart,
-                  include: [
-                    {
-                      model: ShoeModel
-                    }
-                  ]
-                }
+              {
+                model: User, 
+              },
+              {
+                model: Cart,
+                include: [
+                  {
+                    model: ShoeModel
+                  }
+                ]
+              }
+          ],
+          where: { 
+            status: {
+            [Op.or]:[
+                "onProgress", "complete"
               ]
             }
-          ]
-        })
-      .then(users => {
+          },
+          order: [sequelize.literal(`CASE status
+              WHEN 'onProgress' THEN 1
+              ELSE 2
+          END`)]
+        }
+      )
+      .then(transaction => {
         // res.send(users)
-        res.render('admin/index', { view: 'shoes/transaction', users })
+        res.render('admin/index', { view: 'shoes/transaction', transaction })
       })
       .catch(err => {
         res.send(err)
@@ -123,7 +127,7 @@ class Shoes {
   static detailTransaction(req, res) {
     // res.send(req.params)
     User
-      .findAll(
+      .findOne(
         {
           include: [
             {
@@ -142,8 +146,8 @@ class Shoes {
           ]
         })
       .then(users => {
-        // res.send(users[0].Transactions[0].Carts[0])
-        res.render('admin/index', { view: 'shoes/detailShoe', detail: users[0].Transactions[0].Carts[0] })
+        // res.send(users)
+        res.render('admin/index', { view: 'shoes/detailShoe', users })
       })
       .catch(err => {
         res.send(err)
